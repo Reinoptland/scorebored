@@ -38,15 +38,19 @@ export default class Scoreboard extends Component {
         })
 
         // update the state with the new array
-        this.setState({ player: newplayers })
+        this.setState({ players: newplayers })
     }
 
     render() {
+        const playersCopy = [ ...this.state.players ]
+
         return (
             <div className="scoreboard">
                 <h1>Scoreboard</h1>
                 <ul>
-                    { this.state.players.map(player => {
+                    { playersCopy
+                        .sort((a, b) => b.score - a.score)
+                        .map(player => {
                         return <Player 
                             key={player.id}
                             name={player.name} 

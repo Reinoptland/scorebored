@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Player from "./Player";
+import AddPlayer from './AddPlayer'
 
 export default class Scoreboard extends Component {
     // we want to change the score of a player
@@ -41,6 +42,24 @@ export default class Scoreboard extends Component {
         this.setState({ players: newplayers })
     }
 
+    // we can acces the name from the form as a parameter
+    addPlayer = (name) => {
+        console.log('hello! call me maybe:' + name)
+        // Mutation! :( 
+        // const newplayers = this.state.players
+        // newplayers.push({ id: 5, name: 'Rembert', score: 19 })
+
+        // no mutation! :)
+        const newplayers = [...this.state.players, { 
+            id: this.state.players.length + 1, 
+            // use name from form
+            name: name, 
+            score: 0 }
+        ]
+        
+        this.setState({ players: newplayers })
+    }
+
     render() {
         const playersCopy = [ ...this.state.players ]
 
@@ -62,6 +81,8 @@ export default class Scoreboard extends Component {
                         />
                     }) }
                 </ul>
+                <AddPlayer addPlayer={this.addPlayer}/>
+                {/* <button onClick={this.addPlayer}>Add new player</button> */}
             </div>
         )
     }
